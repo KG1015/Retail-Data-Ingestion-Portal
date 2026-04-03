@@ -1,9 +1,11 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const poolConfig = process.env.DATABASE_URL
+let connectionString = process.env.DATABASE_URL;
+
+const poolConfig = connectionString
   ? {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: connectionString.split('?')[0], // Remove any conflicting sslmode=verify-full
     ssl: { rejectUnauthorized: false }
   }
   : {
@@ -12,7 +14,6 @@ const poolConfig = process.env.DATABASE_URL
     database: process.env.PGDATABASE || 'infilectdb',
     password: process.env.PGPASSWORD || 'password',
     port: process.env.PGPORT || 5432,
-    ssl: { rejectUnauthorized: false }
   };
 
 const pool = new Pool(poolConfig);
