@@ -2,7 +2,8 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Used by Supabase/Render easily
+  connectionString: process.env.DATABASE_URL, // for Supabase/Render easily
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false, // Fixed the SSL error for Supabase
   user: process.env.PGUSER || 'user',
   host: process.env.PGHOST || 'localhost',
   database: process.env.PGDATABASE || 'infilectdb',
@@ -19,7 +20,7 @@ const initializeSchema = async () => {
     CREATE TABLE IF NOT EXISTS countries (id SERIAL PRIMARY KEY, name VARCHAR(255) UNIQUE NOT NULL);
     CREATE TABLE IF NOT EXISTS regions (id SERIAL PRIMARY KEY, name VARCHAR(255) UNIQUE NOT NULL);
   `;
-  
+
   const stores = `
     CREATE TABLE IF NOT EXISTS stores (
       id SERIAL PRIMARY KEY,
