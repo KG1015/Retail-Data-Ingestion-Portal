@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Used by Supabase/Render easily
   user: process.env.PGUSER || 'user',
   host: process.env.PGHOST || 'localhost',
   database: process.env.PGDATABASE || 'infilectdb',
