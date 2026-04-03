@@ -1,15 +1,20 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // for Supabase/Render easily
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false, // Fixed the SSL error for Supabase
-  user: process.env.PGUSER || 'user',
-  host: process.env.PGHOST || 'localhost',
-  database: process.env.PGDATABASE || 'infilectdb',
-  password: process.env.PGPASSWORD || 'password',
-  port: process.env.PGPORT || 5432,
-});
+const poolConfig = process.env.DATABASE_URL
+  ? {
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
+    }
+  : {
+      user: process.env.PGUSER || 'user',
+      host: process.env.PGHOST || 'localhost',
+      database: process.env.PGDATABASE || 'infilectdb',
+      password: process.env.PGPASSWORD || 'password',
+      port: process.env.PGPORT || 5432,
+    };
+
+const pool = new Pool(poolConfig);
 
 const initializeSchema = async () => {
   const lookups = `
