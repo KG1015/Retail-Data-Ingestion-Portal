@@ -3,16 +3,17 @@ require('dotenv').config();
 
 const poolConfig = process.env.DATABASE_URL
   ? {
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false }
-    }
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  }
   : {
-      user: process.env.PGUSER || 'user',
-      host: process.env.PGHOST || 'localhost',
-      database: process.env.PGDATABASE || 'infilectdb',
-      password: process.env.PGPASSWORD || 'password',
-      port: process.env.PGPORT || 5432,
-    };
+    user: process.env.PGUSER || 'user',
+    host: process.env.PGHOST || 'localhost',
+    database: process.env.PGDATABASE || 'infilectdb',
+    password: process.env.PGPASSWORD || 'password',
+    port: process.env.PGPORT || 5432,
+    ssl: { rejectUnauthorized: false }
+  };
 
 const pool = new Pool(poolConfig);
 
