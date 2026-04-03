@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+.env
+
+# Large Test Files (Too big for GitHub)
+data/stores_master_500k.csv
+
+# Temporary Uploads
+uploads/*
+!uploads/.gitkeep
+
+# System Files
+.DS_Store
+
+# Untracked project files requested
+PROJECT_EXPLANATION.txt
+500k_result.json
+view_db.js
